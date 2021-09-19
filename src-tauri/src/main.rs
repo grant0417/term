@@ -40,7 +40,7 @@ fn send_output(window: Arc<Window>, file_fd: i32) {
       let mut buffer = [0; 1];
       match buff_reader.read(&mut buffer) {
         Ok(_) => {
-          window.emit("write", buffer[0] as char).unwrap();
+          window.emit("write", buffer[0]).unwrap();
         }
         Err(_) => {
           window.emit("close", "").unwrap();

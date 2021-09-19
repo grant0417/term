@@ -9,10 +9,11 @@ const current = getCurrent();
 
 function App() {
   const terminalDiv = useRef<HTMLDivElement>(null);
+
   const term = new Terminal();
-  term.setOption("fontFamily", "Hack");
   const fitAddon = new FitAddon();
   term.loadAddon(fitAddon);
+  term.setOption("fontFamily", "Hack");
 
   useEffect(() => {
     if (terminalDiv.current) {
@@ -39,8 +40,7 @@ function App() {
   });
 
   listen("write", (event) => {
-    console.log("write", event);
-    term.write(event.payload as string);
+    term.write(new Uint8Array([event.payload as number]));
   });
 
   listen("close", (event) => {
