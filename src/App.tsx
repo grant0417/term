@@ -24,6 +24,7 @@ function App() {
       });
       current.emit("ready", "");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   window.addEventListener("resize", () => {
