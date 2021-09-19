@@ -10,10 +10,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        name: [linux, macos]
+        name: [ubuntu-latest, macos]
 
         include:
-          - name: linux
+          - name: ubuntu-latest
             os: ubuntu-latest
             artifact_name: src-tauri/target/release/app
             asset_name: term-linux
