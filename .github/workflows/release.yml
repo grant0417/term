@@ -1,0 +1,53 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Publish for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        name: [linux, macos]
+
+        include:
+          - name: linux
+            os: ubuntu-latest
+            artifact_name: src-tauri/target/release/app
+            asset_name: term-linux
+          - name: macos
+            os: macos-latest
+            artifact_name: src-tauri/target/release/app
+            asset_name: term-macos
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - name: Install Js dependencies
+        run: yarn
+
+      - name: Build Js
+        run: yarn build
+
+      - name: Build Rust
+        run: cd src-tauri && cargo build --release
+
+      - name: Upload binaries to release
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.asset_name }}
+          path: ${{ matrix.artifact_name }}
