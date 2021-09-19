@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Hack';
+  src: url('hack.ttf') format('truetype');
+}
+
 .xterm {
   position: relative;
   user-select: none;
